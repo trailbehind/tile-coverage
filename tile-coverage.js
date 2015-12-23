@@ -2,7 +2,12 @@
 
 var turf = require('turf'),
     argv = require('yargs')
+        .usage('Usage: $0 [options] path/to/tiles/10')
         .boolean(['tms', 'yx'])
+        .describe('tms', 'Use TMS y origin')
+        .describe('yx', 'load tiles as z/y/x, instead of z/x/y')
+        .help('h')
+        .alias('h', 'help')
         .argv,
     fs = require('fs'),
     walk = require('walk'),
