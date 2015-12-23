@@ -1,0 +1,27 @@
+{
+  "name": "tile-coverage",
+  "version": "1.0.0",
+  "description": "A command line tool to generate coverage maps for tms tiles",
+  "main": "index.js",
+  "dependencies": {
+    "yargs": "^3.31.0",
+    "turf": "^2.0.2",
+    "sphericalmercator": "^1.0.4",
+    "walk": "^2.3.9"
+  },
+  "bin": {
+    "tile-coverage": "tile-coverage.js"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "turf",
+    "turfjs",
+    "gis",
+    "tms",
+    "coverage"
+  ],
+  "author": "Jesse Crocker",
+  "license": "MIT"
+}
