@@ -14,14 +14,12 @@ var turf = require('turf'),
 
 var yx = argv.yx;
 var tms = argv.tms;
-var dirFeatures = [];
 
-for(var i = 0; i < argv._.length; i++) {
+var processDirectory = function(directoryPath, callback) {
     var features = [];
-    var dir = argv._[i];
-    var dirInfo = path.parse(dir);
+    var dirInfo = path.parse(directoryPath);
     var zoom = parseInt(dirInfo.name);
-    var walker = walk.walk(dir, { followLinks: false })
+    var walker = walk.walk(directoryPath, { followLinks: false });
     walker.on("file", function (root, fileStats, next) {
         var tilePath = path.join(root, fileStats.name);
         var tilePathInfo = path.parse(tilePath);
@@ -43,15 +41,29 @@ for(var i = 0; i < argv._.length; i++) {
         var featureCollection = turf.featurecollection(features);
         var merged = turf.merge(featureCollection);
         merged.properties = {
-            path: dir
+            path: directoryPath
         };
         var simplified = turf.simplify(merged, 0.00001, false);
-        dirFeatures.push(simplified);
-        produceOutput();
+        callback(simplified);
     });
-}
+};
 
-var produceOutput = function() {
-    var dirFeatureCollection = turf.featurecollection(dirFeatures);
+var produceOutput = function(features) {
+    var dirFeatureCollection = turf.featurecollection(features);
     console.log(JSON.stringify(dirFeatureCollection));
-}
+};
+
+var processDirectories = function(directories) {
+    var dirFeatures = [];
+    for(var i = 0; i < directories.length; i++) {
+        processDirectory(directories[i], function(feature){
+            dirFeatures.push(feature);
+            if(dirFeatures.length == argv._.length) {
+                produceOutput(dirFeatures);
+            }
+        });
+    }
+};
+
+processDirectories(argv._);
+
