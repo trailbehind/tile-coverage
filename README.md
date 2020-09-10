@@ -7,4 +7,5 @@ Generate GeoJSON (Multi)Polygons showing extent of a set of map tiles, one zoom 
 tile-coverage /path/to/tiles/10 > result.geojson
 
 ## Example Output
+
 [https://gist.github.com/JesseCrocker/f5d027243225867d03d6](https://gist.github.com/JesseCrocker/f5d027243225867d03d6)
