@@ -24,7 +24,7 @@ def s3_tile_list(location: str) -> Dict[int, list]:
     pages = paginator.paginate(Bucket=s3_bucket, Prefix=s3_path)
     for page in pages:
         for obj in page["Contents"]:
-            match = re.match(s3_path + r"(\d+)/(\d+)/(\d+)\.", obj["Key"])
+            match = re.search(r"(\d+)/(\d+)/(\d+)\.\w+$", obj["Key"])
             if match:
                 z = int(match.groups()[0])
                 x = int(match.groups()[1])
